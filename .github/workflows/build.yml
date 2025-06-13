@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -18,10 +19,10 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip build-essential libffi-dev libssl-dev libjpeg-dev zlib1g-dev libncurses5 libncurses5-dev libsqlite3-dev libpng-dev
+          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip build-essential libffi-dev libssl-dev libjpeg-dev zlib1g-dev libncurses5 libsqlite3-dev libpng-dev
           pip install buildozer cython virtualenv
 
-      - name: Init buildozer if needed
+      - name: Initialize buildozer
         run: |
           if [ ! -f buildozer.spec ]; then buildozer init; fi
 
@@ -30,7 +31,7 @@ jobs:
           buildozer android debug
 
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: UzQuiz-APK
           path: bin/*.apk
